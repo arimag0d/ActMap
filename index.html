@@ -1,0 +1,186 @@
+	<!DOCTYPE html>
+	<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		
+		<title>ActMap</title>
+		<link rel="icon" href="favicon.png" type="image/png">
+		
+		<!-- <link rel="stylesheet/less" type="text/css" href="styles.less" /> -->
+		<link rel="stylesheet" href="styles.css">
+
+		<!-- <script src="https://cdn.jsdelivr.net/npm/less" ></script> -->
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+	</head>
+	
+	<body>
+		<div class="container-fluid">
+			<div id="map"></div>
+			<div id="markerPreview"><img src="marker-preview.png" alt=""></div>
+			
+			<div id="btn-show-sidebar">
+				<img src="favicon.png" alt="">
+				<button data-bs-toggle="offcanvas" data-bs-target="#offcanvasFilter" aria-controls="offcanvasFilter">
+				</button> 
+			</div>
+
+			<div class="btn-group-vertical" id="buttons-container">
+				<button type="button" class="btn btn-user" data-bs-toggle="modal" data-bs-target="#loginModal"><img src="user.png" alt=""></button>
+				<button type="button" class="btn btn-add-marker" id="button-add-marker" data-bs-toggle="modal" data-bs-target="#profileModal"><img src="add-marker.png" alt=""></button>
+			</div>
+		</div>
+
+		<!-- Модальне вікно входу -->
+		<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+
+					<div class="modal-header">
+						<h5 class="modal-title" id="loginModalLabel">Login/Register</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					
+					<div class="modal-body">
+						<form id="loginForm" action="/login" method="post">
+							<div class="form-group">
+								<label for="loginEmail">Email address</label>
+								<input type="email" class="form-control" id="loginEmail" name="email" aria-describedby="emailHelp">
+							</div>
+							<div class="form-group">
+								<label for="loginPassword">Password</label>
+								<input type="password" class="form-control" id="loginPassword" name="password">
+							</div>
+							<button type="button" class="btn btn-primary" id="loginButton">Login</button>
+						</form>
+
+						<form id="registerForm" action="/register" method="post">
+							<div class="form-group">
+								<label for="registerEmail">Email address</label>
+								<input type="email" class="form-control" id="registerEmail" name="email" aria-describedby="emailHelp">
+							</div>
+							<div class="form-group">
+								<label for="registerPassword">Password</label>
+								<input type="password" class="form-control" id="registerPassword" name="password">
+							</div>
+							<button type="button" class="btn btn-primary" id="registerButton">Register</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	
+		<!-- Модальне вікно профіля -->
+		<div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="profileModalLabel">Logged </h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Модальне вікно маркера -->
+		<div class="modal fade" id="markerModal" tabindex="-1" aria-labelledby="markerModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="markerModalLabel">Pin</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Модальне вікно підтвердження видалення мітки -->
+		<div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="confirmModalLabel">The unsaved content will be lost.<br>Are you sure you want to continue?</h5>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary text-center" data-bs-dismiss="modal">Cancel</button>
+						<button type="button" class="btn btn-primary text-center" id="confirmButton">Confirm</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Sidebar створення мітки -->
+		<div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasAddMarker" aria-labelledby="offcanvasAddMarkerLabel" data-bs-keyboard="false">
+			<div class="offcanvas-header">
+			  <h5 class="offcanvas-title" id="offcanvasAddMarkerLabel">New Pin</h5>
+			  <button type="button" class="btn-close custom-close-btn" id="closeButton" aria-label="Close"></button>
+			</div>
+			<div class="offcanvas-body">
+				<p style="margin-bottom: 0.5rem">Pin Category</p>
+			  	<div class="btn-group dropend" style="margin-bottom: 1rem">
+					<button class="btn btn-secondary dropdown-toggle btn-sm" type="button" id="chooseCtgButton" data-bs-toggle="dropdown" aria-expanded="false">
+						Choose
+					</button>
+					<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+						<li><a class="dropdown-item" href="#" onclick="changeButtonText('Food')">Food & Drink</a></li>
+						<li><a class="dropdown-item" href="#" onclick="changeButtonText('Performing')">Performing & Visual Arts</a></li>
+						<li><a class="dropdown-item" href="#" onclick="changeButtonText('Music')">Music</a></li>
+					</ul>
+				</div>
+				<div class="mb-3">
+					<label for="descriptionFormControlInput" class="form-label">Description</label>
+					<textarea class="form-control" style="background-color: #4a5366; border-color: #c8b38a;" id="descriptionFormControlTextarea" rows="5" placeholder="Diana Ross and The Supremes - Motown Music History Livestream"></textarea>
+				</div>
+				<div class="mb-3">
+					<label for="DateInput" class="form-label">Date</label>
+					<input style="background-color: #4a5366; border-color: #c8b38a;" class="form-control" type="date" id="DateInput">
+				</div>
+				<div class="mb-3">
+					<label for="TimeInput" class="form-label">Time</label>
+					<input style="background-color: #4a5366; border-color: #c8b38a;" class="form-control" type="time" id="TimeInput">
+				</div>
+			</div>
+			<div class="offcanvas-footer d-grid gap-2" style="padding: 1.5rem; padding-right: 3rem; padding-left: 3rem;">
+				<button type="button" class="btn btn-primary text-center" id="markerConfirm" style="border-radius: 1rem;" data-bs-dismiss="modal">Confirm</button>
+			</div>
+		  </div>
+		</div>
+
+		<!-- Sidebar фільтрації -->
+		<div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasFilter" aria-labelledby="offcanvasFilterLabel">
+			<div class="exit-filter-container">
+				<button type="button" id="exitFilter"></button>
+				<img src="sidebar-arrow.png" alt="">
+			</div>
+			<div class="offcanvas-header">
+			  <h5 class="offcanvas-title" id="offcanvasAddMarkerLabel">View</h5>
+			</div>
+			<div class="offcanvas-body">
+			  <div class="input-group mb-3">
+				<input type="text" class="form-control" placeholder="Searching..." aria-label="Searching..." aria-describedby="button-addon2">
+				<button class="btn btn-outline-secondary" type="button" id="button-addon2">Search</button>
+			   </div>
+			</div>
+		  </div>
+		</div>
+			
+		<script src="map.js"></script>
+		<script src="cookies.js"></script>
+		<script src="auth.js"></script>
+
+		<script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDBOofgGsTrOnWkMme53csYECWQW2DMUeo&callback=initMap&libraries=maps&language=en&loading=async" async defer></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+	</body>
+	</html>	

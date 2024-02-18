@@ -1,0 +1,205 @@
+html,
+body {
+    height: 100%;
+    font-family: "微软雅黑","Microsoft YaHei","Neuropolitical",sans-serif !important;
+}
+
+#map {
+    height: 100%;
+}
+
+.container-fluid {
+    padding: 0 !important;
+    height: 100%;
+}
+
+
+.btn-group-vertical {
+    position: absolute !important;
+    z-index: 1;
+    right: 1rem;
+    top: 1rem;
+}
+
+.btn-group-vertical button { 
+    background-color: rgba(50,57,71,0.7);
+    border-radius: 1rem !important;
+    margin-bottom: 1rem;
+    width: 4rem !important;
+    height: 4rem;
+
+    border: 0 !important;
+    outline: none !important;
+}
+
+.btn-group-vertical button:focus {
+    box-shadow:none;
+}
+
+.btn-group-vertical button img {
+    opacity: 1;
+}
+
+.btn {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+}
+
+.btn img {
+    width: 2.5rem;
+    height: 2.5rem;
+}
+
+.btn-user img {
+    border-radius: 2rem;
+}
+
+#btn-show-sidebar {
+    background-image: url(sidebar-main.png);
+    background-color: (255, 255, 255, 0.7);
+    
+    background-size: contain;
+    background-repeat: no-repeat;
+
+    position: absolute;
+    left: 5rem;
+    top: 2rem;
+
+    width: 6.4rem;
+    height: 4rem;
+}
+
+#btn-show-sidebar button {
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    background-image: url(sidebar-arrow.png);
+    transform: rotate(180deg);
+    background-size: 2.5rem;
+    background-position: center;
+    outline: none;
+    background-repeat: no-repeat;
+    border: 0;
+}
+
+#btn-show-sidebar img {
+    width: 6rem;
+    position: absolute;
+    top: 50%;
+    left: -15%;
+    transform: translate(-50%, -50%);
+}
+.offcanvas offcanvas-start show {
+    background-color: #3b4354;
+}
+
+.offcanvas {
+    background-color: #3b4354 !important;
+    border-radius: 1rem;
+    margin: 1rem;
+}
+
+.offcanvas-header {
+    border-radius: 1rem;
+    background-color: #3b4354;
+    color: #c8b38a;
+}
+
+.offcanvas-title {
+    font-weight: bold;
+    font-size: medium;
+}
+
+.offcanvas-body {
+    border-radius: 1rem;
+    background-color: #3b4354;
+    color: #97989c;
+    font-size: small;
+}
+
+.offcanvas-footer {
+    border-radius: 1rem;
+    background-color: #3b4354;
+    text-align: center !important;
+}
+
+#markerPreview {
+    position: fixed;
+    display: none;
+    pointer-events: none;
+    z-index: 9999;
+}
+
+#markerPreview img {
+    width: 2.56rem;
+    height: 2.88rem;
+}
+
+.offcanvas-header .btn-close:focus {
+    box-shadow:none;
+}
+
+.offcanvas-header .btn-close {
+    background-color: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    width: 2rem !important;
+    height: 2rem !important;
+}
+
+.custom-close-btn {
+    background-image: url('close-button.png') !important;
+    background-size: cover !important;
+    background-repeat: no-repeat !important;
+}
+
+.offcanvas-header .btn-close::after {
+    content: none !important;
+}
+
+#confirmModal .modal-dialog {
+    margin: 0 auto;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+#confirmModal .modal-content {
+    background-color: #ece5d8 !important;
+}
+
+#confirmModalLabel {
+    font-weight: bold;
+}
+
+.exit-filter-container button {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: transparent;
+
+    border: none;
+}
+
+.exit-filter-container img {
+    align-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+}
+
+.exit-filter-container {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url(sidebar-main.png);
+    background-size: contain;
+    top: 1.5rem;
+    left: 24.95rem;
+    position: absolute;
+    width: 6.4rem;
+    height: 4rem;
+    background-repeat: no-repeat;
+    border: none;
+    background-color: transparent;
+}
